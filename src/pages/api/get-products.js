@@ -3,8 +3,11 @@ import prisma from "../../../prisma/client";
 
 export default async function handler(req, res) {
   if (req.method === "GET") {
+    const { skip }= req.query;
     try {
       const list = await prisma.products.findMany({
+        skip,
+        take:10,
         orderBy: {
           createdAt: "desc",
         },
