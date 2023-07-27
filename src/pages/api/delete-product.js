@@ -1,6 +1,8 @@
+import { cors, runMiddleware } from "@/helpers/cors-middleware";
 import prisma from "../../../prisma/client";
 
 export default async function handler(req, res) {
+  await runMiddleware(req, res, cors)
   if (req.method === "DELETE") {
     const { id }= req.query
     try {
