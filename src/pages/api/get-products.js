@@ -6,13 +6,16 @@ export default async function handler(req, res) {
     const { skip }= req.query;
     try {
       const list = await prisma.products.findMany({
-        skip,
+        skip: parseInt(skip),
         take:10,
         orderBy: {
           createdAt: "desc",
         },
       });
-      res.status(200).json({ message:"success get products", products: list });
+
+      const countData = await prisma.products.count()
+
+      res.status(200).json({ message:"success get products", totalData: countData, products: list });
     } catch (e) {
       res.status(500).json(e);
     }
